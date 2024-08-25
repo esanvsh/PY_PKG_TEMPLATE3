@@ -14,16 +14,15 @@ pipeline{
     }
 
     stages{
-         
-        stage('Git Checkout'){
-                    when { expression {  params.action == 'create' } }
-            steps{
-            gitCheckout(
-                branch: "main",
-                url: "https://github.com/esanvsh/PY_PKG_TEMPLATE3.git"
-            )
-            }
-        }
+        //  stage('Git Checkout'){
+        //  when { expression {  params.action == 'create' } }
+        //    steps{
+        //    gitCheckout(
+        //        branch: "main",
+        //        url: "https://github.com/esanvsh/PY_PKG_TEMPLATE3.git"
+        //    )
+        //    }
+        // }
         //  stage('Unit Test pytest'){
          
         //  when { expression {  params.action == 'create' } }
