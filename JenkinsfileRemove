@@ -24,10 +24,11 @@ pipeline{
         stage('Docker Container Stop'){
          when { expression {  params.action == 'create' } }
             steps{
-               script{
-                sh 'sudo docker stop python_snakey-python_app-1'
-                sh 'sudo docker rm python_snakey-python_app-1'
-               }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
+                script{
+                    sh 'sudo docker stop python_snakey-python_app-1'
+                    sh 'sudo docker rm python_snakey-python_app-1'
+                    }
             }
         }
         stage('Docker Container Remove'){
