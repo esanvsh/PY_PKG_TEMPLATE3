@@ -30,7 +30,7 @@ services:
     networks:
       - app-tier
     command:
-      uvicorn src.snakesay.INGEST:app --reload --port 8002
+      tail -f /dev/null
 
 
 networks:
