@@ -13,6 +13,7 @@ COPY . /app
 # Setup 
 #RUN pip install -y toml
 #RUN ./update_toml_py.py
+RUN chmod 777 init_setup.sh
 RUN ./init_setup.sh
 #RUN python3.11 -m venv venv
 #RUN /bin/bash -c "source ./venv/bin/activate"
