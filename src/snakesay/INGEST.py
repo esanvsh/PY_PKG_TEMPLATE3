@@ -20,13 +20,13 @@ app = FastAPI()
 # LOGGING
 ############################################################################################
 # Create and configure logger
-#logging.basicConfig(filename="/home/SSSIM/CLIENT_V.log",
-#                    format='"CLIENT" %(asctime)s %(message)s',
-#                    filemode='w')
+logging.basicConfig(filename="./INGEST.log",
+                    format='"INGEST" %(asctime)s %(message)s',
+                    filemode='w')
 # Creating an object
-#logger = logging.getLogger()
+logger = logging.getLogger()
 # Setting the threshold of logger to DEBUG
-#logger.setLevel(logging.INFO)
+logger.setLevel(logging.INFO)
 
 ############################################################################################
 # DATA DETAILS
@@ -72,8 +72,7 @@ metadata = {
     'author': "SSS"}
 
 def process_string(json_as_string): 
-    print(json_as_string)
-    print(type(json_as_string))
+    logging.info(type(json_as_string))
     return json_as_string
 
 
