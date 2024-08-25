@@ -77,7 +77,7 @@ pipeline{
          when { expression {  params.action == 'create' } }
             steps{
                script{
-                sh 'sudo docker-compose up -d'
+                sh 'docker-compose up -d'
                }
             }
         }
