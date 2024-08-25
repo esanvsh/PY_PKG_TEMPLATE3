@@ -35,10 +35,12 @@ pipeline{
         stage('Docker Container Remove'){
          when { expression {  params.action == 'create' } }
             steps{
-               script{
-                sh 'sudo docker stop python_snakey-mysql_db-1'
-                sh 'sudo docker rm python_snakey-mysql_db-1'
-               }
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
+                    script{
+                        sh 'sudo docker stop python_snakey-mysql_db-1'
+                        sh 'sudo docker rm python_snakey-mysql_db-1'
+                    }
+                }
             }
         }
         
