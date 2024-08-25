@@ -36,8 +36,8 @@ services:
     ports:
       - "8002:8002"
       - "8501:8501"
-    command:
-      tail -f /dev/null
+    # command:
+    #   tail -f /dev/null
 
 
 # networks:
