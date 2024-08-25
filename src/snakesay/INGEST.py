@@ -71,9 +71,9 @@ metadata = {
     'instruction': "DO NOT USE WITHOUT FULL UNDERSTANDING",
     'author': "SSS"}
 
-def process_string(json_as_string):
-    # 
+def process_string(json_as_string): 
     print(json_as_string)
+    print(type(json_as_string))
     return json_as_string
 
 
