@@ -10,7 +10,8 @@ fastapi[all]
 sqlalchemy
 # Depending on your exact setup a different mysql connector may work better than another
 pymysql
-mysqlclient
+# For mysqlclient we need to downgrade our python version from 3.11
+#mysqlclient
 mysql-connector-python
 #####################################
 # ENV, PACKAGE, DOCS realted Library

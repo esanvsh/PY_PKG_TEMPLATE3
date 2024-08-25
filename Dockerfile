@@ -1,7 +1,8 @@
 FROM ubuntu:22.04
 
 # Install necessary packages
-RUN apt-get update && apt-get install -y python3.11 python3.11-venv python3-pip curl
+RUN apt-get update && apt-get install -y python3.11 python3.11-venv python3-pip curl 
+#RUN apt-get install libmysqlclient-dev
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11
 RUN apt-get install -y net-tools sudo vim curl
 # Set working directory
