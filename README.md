@@ -117,10 +117,13 @@ pip install -r requirements_dev.txt
 ### STEP 2: BUILD DOCKER IMAGE
 
 docker build -t snakeapp .
-docker run -d -it -p 8501:8501 --name snakecontainer snakeapp
+docker run -d -it -p 8501:8501 -p 8002:8002 --name snakecontainer snakeapp
 docker exec -it snakecontainer bash
 > snakey
-
+- On PORT 8002 FASTAPI will work
+- ON PORT 8501 STREAMLIT will work
+- PATH src/snakey/ --> RUN STREAMLIT on 8501
+> streamlit run strmlt_ui.py
 
 
 ######################################################################
