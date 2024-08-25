@@ -1,0 +1,50 @@
+@Library('my-shared-library') _
+
+pipeline{
+
+    agent any
+    //agent { label 'Demo' }
+
+    parameters{
+
+        choice(name: 'action', choices: 'create\ndelete', description: 'Choose create/Destroy')
+        string(name: 'ImageName', description: "name of the docker build", defaultValue: 'snakeapp')
+        string(name: 'ImageTag', description: "tag of the docker build", defaultValue: 'v1')
+        string(name: 'DockerHubUser', description: "name of the Application", defaultValue: 'esanvsh')
+    }
+
+    stages{
+        stage('Docker Compose'){
+         when { expression {  params.action == 'create' } }
+            steps{
+               script{
+                sh 'sudo docker-compose down -v'
+               }
+            }
+        }
+        stage('Docker Container Stop'){
+         when { expression {  params.action == 'create' } }
+            steps{
+               script{
+                sh 'sudo docker stop python_snakey-python_app-1'
+               }
+            }
+        }
+        stage('Docker Container Remove'){
+         when { expression {  params.action == 'create' } }
+            steps{
+               script{
+                sh 'sudo docker rm python_snakey-python_app-1'
+               }
+            }
+        }
+        // stage('Docker Image Cleanup : DockerHub '){
+        //  when { expression {  params.action == 'create' } }
+        //     steps{
+        //        script{
+        //            dockerImageCleanup("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
+        //        }
+        //     }
+        // }
+    }
+}
