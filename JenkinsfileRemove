@@ -26,6 +26,7 @@ pipeline{
             steps{
                script{
                 sh 'sudo docker stop python_snakey-python_app-1'
+                sh 'sudo docker rm python_snakey-python_app-1'
                }
             }
         }
@@ -33,7 +34,8 @@ pipeline{
          when { expression {  params.action == 'create' } }
             steps{
                script{
-                sh 'sudo docker rm python_snakey-python_app-1'
+                sh 'sudo docker stop python_snakey-mysql_db-1'
+                sh 'sudo docker rm python_snakey-mysql_db-1'
                }
             }
         }
