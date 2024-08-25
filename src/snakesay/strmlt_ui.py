@@ -32,6 +32,7 @@ def Process_File(start_num, end_num) -> pd.DataFrame:
       #print("Status code: ", response.status_code)
       #print("Printing Entire Post Request")
       print(response.json())
+      print(response.status_code)
       data = response.json()
       df = pd.concat([df, pd.DataFrame([data])], ignore_index=True)
       # increase i
