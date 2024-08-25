@@ -108,7 +108,7 @@ async def test_data(body: Dict):
 
 @app.post("/callproducer")
 async def post_dd_data(item: DDItems):
-    print('MESSAGE RECEIVED')
+    logging.info('MESSAGE RECEIVED callproducer')
     #return {"status":"success"}
     try:
         json_of_item = jsonable_encoder(item)
