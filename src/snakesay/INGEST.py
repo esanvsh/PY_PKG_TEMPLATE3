@@ -59,7 +59,7 @@ logger.setLevel(logging.INFO)
 
 class DDItems(BaseModel):
     metadata_list: Any = Field(alias="metadata-list")
-    feed_source: Any = Field(alias="feed-source")
+    #feed_source: Any = Field(alias="feed-source")
     header_list: Any = Field(alias="header-list")
     g_sbi_message: Any = Field(alias="5g-sbi-message")
 ############################################################################################
