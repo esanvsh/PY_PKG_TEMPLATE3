@@ -29,6 +29,8 @@ services:
       - mysql_db
     networks:
       - app-tier
+    ports:
+      - "8002:8002"
     command:
       tail -f /dev/null
 
