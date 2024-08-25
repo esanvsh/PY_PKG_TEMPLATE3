@@ -22,4 +22,4 @@ RUN ./init_setup.sh
 EXPOSE 8002
 EXPOSE 8501
 # Run CMD
-CMD ["uvicorn", "src.snakesay.INGEST:app", "--reload", "--port", "8002"]
+CMD ["uvicorn", "src.snakesay.INGEST:app", "--reload", "--port", "8002", "--host", "0.0.0.0"]
