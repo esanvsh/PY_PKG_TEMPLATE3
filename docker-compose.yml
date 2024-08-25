@@ -13,13 +13,16 @@ services:
 
   mysql_db:
     image: mysql:5.7
+    network_mode: bridge
     environment:   # Set up mysql database name and password
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: test
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
-    networks:
-      - app-tier
+    ports:
+      - "3306:3306"
+    # networks:
+    #   - app-tier
 
   python_app:
     build:
@@ -27,14 +30,15 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - mysql_db
-    networks:
-      - app-tier
+    network_mode: bridge
+    # networks:
+    #   - app-tier
     ports:
       - "8002:8002"
     command:
       tail -f /dev/null
 
 
-networks:
-  app-tier:
-    driver: bridge
+# networks:
+#   app-tier:
+#     driver: bridge
