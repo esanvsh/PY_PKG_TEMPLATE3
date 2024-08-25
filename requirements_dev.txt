@@ -1,0 +1,47 @@
+requests
+pyyaml
+typing
+pydantic
+streamlit
+numpy
+pandas
+#kafka-python
+fastapi[all]
+sqlalchemy
+# Depending on your exact setup a different mysql connector may work better than another
+pymysql
+mysqlclient
+mysql-connector-python
+#####################################
+# ENV, PACKAGE, DOCS realted Library
+#####################################
+#notebook
+# Ensure to check argument passed is correct
+#ensure
+toml
+mkdocs-material
+ipywidgets
+tqdm
+python-dotenv
+#pip-chill
+#####################################
+# DEV REQUIREMENTS - FOR TESTING
+#####################################
+## PYTEST: For testing
+pytest==7.2.2
+pytest-mock==3.10.0
+pytest-cov==4.0.0
+## TOX: It aims to automate and standardize testing in Python. 
+## It is part of a larger vision of easing the packaging, 
+## testing and release process of Python software (alongside pytest and devpi)
+tox==4.4.11
+## RUFF: It is extremely fast Python linter and code formatter, written in Rust
+ruff==0.0.261
+## mypy is for type check
+mypy==1.1.1
+# Check for setup.py to install all local packages
+# To help setup.py we have pyproject.toml & setup.cfg
+#####################################
+# CONSIDER CURRENT PROJECT as PACKAGE
+#####################################
+-e .

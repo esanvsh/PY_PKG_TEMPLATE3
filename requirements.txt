@@ -1,0 +1,26 @@
+requests
+pyyaml
+typing
+pydantic
+#kafka-python
+fastapi[all]
+sqlalchemy
+# Depending on your exact setup a different mysql connector may work better than another
+pymysql
+mysqlclient
+mysql-connector-python
+#####################################
+# ENV, PACKAGE, DOCS realted Library
+#####################################
+#notebook
+#ensure
+toml
+mkdocs-material
+ipywidgets
+tqdm
+python-dotenv
+#pip-chill
+#####################################
+# CONSIDER CURRENT PROJECT as PACKAGE
+#####################################
+-e .

@@ -1,0 +1,51 @@
+[build-system]
+requires = [ "setuptools>=61.0", "setuptools-scm",]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "snakesay"
+version = "0.0.1"
+dependencies = [ "requests==2.28.2",]
+description = "COMMAND_NAME is a Python-based command-line interface (CLI) utility."
+requires-python = ">=3.11"
+readme = "README.md"
+classifiers = [ "Operating System :: OS Independent", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12",]
+[[project.authors]]
+name = "esansvh"
+email = "sanvendra@gmail.com"
+
+#[options]
+#package_dir = "src"
+
+[project.license]
+text = "MIT"
+
+[project.optional-dependencies]
+testing = [ "ruff==0.0.261", "pytest>=7.2.2", "tox>=4.4.11", "pytest-mock>=3.10.0", "pytest-cov>=4.0.0", "mypy>=1.1.1",]
+
+[project.urls]
+"Bug Tracker" = "https://github.com/esansvh/PY_PKG_TEMPLATE1/issues"
+Documentation = "https://esansvh.github.io/PY_PKG_TEMPLATE1/"
+Source = "https://github.com/esansvh/PY_PKG_TEMPLATE1/"
+
+[project.scripts]
+snakey = "snakesay.__main__:main"
+
+
+
+[tool.mypy]
+mypy_path = "src"
+ignore_missing_imports = true
+implicit_optional = true
+
+[tool.ruff]
+line-length = 127
+src = [ "src",]
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+select = [ "E9", "F63", "F7", "F82", "ANN001", "ANN201", "ANN202", "ANN205", "ANN206",]
+
+[tool.ruff.mccabe]
+max-complexity = 10
+
+[tool.pytest.ini_options]
+testpaths = [ "tests",]
