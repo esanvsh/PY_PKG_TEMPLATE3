@@ -14,6 +14,67 @@ pipeline{
     }
 
     stages{
+<<<<<<< HEAD
+=======
+        //  stage('Git Checkout'){
+        //  when { expression {  params.action == 'create' } }
+        //    steps{
+        //    gitCheckout(
+        //        branch: "main",
+        //        url: "https://github.com/esanvsh/PY_PKG_TEMPLATE3.git"
+        //    )
+        //    }
+        // }
+        //  stage('Unit Test pytest'){
+         
+        //  when { expression {  params.action == 'create' } }
+
+        //     steps{
+        //        script{
+                   
+        //            mvnTest()
+        //        }
+        //     }
+        // }
+        //  stage('Integration Test pytest'){
+        //  when { expression {  params.action == 'create' } }
+        //     steps{
+        //        script{
+                   
+        //            mvnIntegrationTest()
+        //        }
+        //     }
+        // }
+    //     stage('Static code analysis: Sonarqube'){
+    //      when { expression {  params.action == 'create' } }
+    //         steps{
+    //            script{
+                   
+    //                def SonarQubecredentialsId = 'sonarqube-api'
+    //                statiCodeAnalysis(SonarQubecredentialsId)
+    //            }
+    //         }
+    //    }
+    //    stage('Quality Gate Status Check : Sonarqube'){
+    //      when { expression {  params.action == 'create' } }
+    //         steps{
+    //            script{
+                   
+    //                def SonarQubecredentialsId = 'sonarqube-api'
+    //                QualityGateStatus(SonarQubecredentialsId)
+    //            }
+    //         }
+    //    }
+        // stage('Maven Build : maven'){
+        //  when { expression {  params.action == 'create' } }
+        //     steps{
+        //        script{
+                   
+        //            mvnBuild()
+        //        }
+        //     }
+        // }
+>>>>>>> da2ec3a7192877b690d73a8e1a361019b131b6ea
         stage('Docker Compose'){
          when { expression {  params.action == 'create' } }
             steps{
@@ -21,6 +82,7 @@ pipeline{
                 sh 'sudo docker-compose down -v'
                }
             }
+<<<<<<< HEAD
         }
         stage('Docker Container Stop'){
          when { expression {  params.action == 'create' } }
@@ -47,5 +109,16 @@ pipeline{
         //        }
         //     }
         // }
+=======
+        }  
+        stage('Docker Image Cleanup : DockerHub '){
+         when { expression {  params.action == 'create' } }
+            steps{
+               script{
+                   dockerImageCleanup("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
+               }
+            }
+        }
+>>>>>>> da2ec3a7192877b690d73a8e1a361019b131b6ea
     }
 }
