@@ -9,6 +9,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from typing import Dict
 from typing import Any
+import mysqldb
 from mysqldb import conn_setup, sql_cmd
 #from kafka import KafkaProducer, producer
 
