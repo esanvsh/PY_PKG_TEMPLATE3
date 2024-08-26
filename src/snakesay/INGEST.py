@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 from typing import Dict
 from typing import Any
 from snakesay import mysqldb
-from mysqldb import conn_setup, sql_cmd
+#from mysqldb import conn_setup, sql_cmd
 #from kafka import KafkaProducer, producer
 
 from pydantic import BaseModel, Field
@@ -76,14 +76,14 @@ metadata = {
 def process_string(json_as_string): 
     logging.info(type(json_as_string))
     json_object = json.loads(json_as_string)
-    HOST_VAL=json_object["header-list"]["host"]
-    TGPP_TAR_VAL=json_object["header-list"]["3gpp-sbi-target-apiroot"]
-    PATH_VAL=json_object["header-list"][":path"]
-    METHOD_VAL=json_object["header-list"][":method"]
+    HOST_VAL=str(json_object["header-list"]["host"])
+    TGPP_TAR_VAL=str(json_object["header-list"]["3gpp-sbi-target-apiroot"])
+    PATH_VAL=str(json_object["header-list"][":path"])
+    METHOD_VAL=str(json_object["header-list"][":method"])
     DB_NAME='test'
     TBL_NAME='test_tbl'
-    sqlcmd= "INSERT INTO  "+DB_NAME+"."+TBL_NAME+" ('HOST', '3GPP_SBI_TARGET_ROOT', 'PATH', 'METHOD') \
-                  VALUES ("+HOST_VAL+", "+TGPP_TAR_VAL+", "+PATH_VAL+", "+METHOD_VAL+")"
+    sqlcmd= "INSERT INTO  "+DB_NAME+"."+TBL_NAME+" (FlowID, HOST, 3GPP_SBI_TARGET_ROOT, PATH, METHOD) \
+                  VALUES (NULL, "+HOST_VAL+", "+TGPP_TAR_VAL+", "+PATH_VAL+", "+METHOD_VAL+")"
     return sqlcmd
 
 
@@ -131,15 +131,15 @@ async def post_dd_data(item: DDItems):
         PASSWORD='root'
         MYSQLIP='172.17.0.1'
         MYSQLPORT='3306'
-        conn = conn_setup(USERNAME,PASSWORD,MYSQLIP,MYSQLPORT)
+        conn = mysqldb.conn_setup(USERNAME,PASSWORD,MYSQLIP,MYSQLPORT)
         logging.info("CONNECTION ESTABLISHED")
         sql_create_table="CREATE TABLE IF NOT EXISTS test_tbl (\
         FlowID int NOT NULL AUTO_INCREMENT, HOST varchar(255) NOT NULL, 3GPP_SBI_TARGET_ROOT varchar(255) NOT NULL,\
         PATH varchar(255), METHOD varchar(255), PRIMARY KEY (FlowID));"
-        rowid = sql_cmd(conn, sql_create_table)
+        rowid = mysqldb.sql_cmd(conn, sql_create_table)
         logging.info("TABLE EXECUTED")
-        logging.info("ROWID: ", lastrowid)
-        lastrowid = sql_cmd(conn, sqlcmd)
+        logging.info("ROWID: ", rowid)
+        lastrowid = mysqldb.sql_cmd(conn, sqlcmd)
         logging.info("SQLCMD EXECUTED")
         logging.info("LASTROWID: ", lastrowid)
         return JSONResponse(content=json_of_item, status_code=201)
