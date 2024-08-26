@@ -76,14 +76,14 @@ metadata = {
 def process_string(json_as_string): 
     logging.info(type(json_as_string))
     json_object = json.loads(json_as_string)
-    HOST_VAL=str(json_object["header-list"]["host"][0])
-    TGPP_TAR_VAL=str(json_object["header-list"]["3gpp-sbi-target-apiroot"][0])
+    MSG_DIR_VAL=str(json_object["metadata-list"]["message-direction"][0])
+    AUTH_VAL=str(json_object["header-list"][":authority"][0])
     PATH_VAL=str(json_object["header-list"][":path"][0])
     METHOD_VAL=str(json_object["header-list"][":method"][0])
     DB_NAME='test'
     TBL_NAME='test_tbl'
-    sqlcmd= "INSERT INTO  "+DB_NAME+"."+TBL_NAME+" (FlowID, HOST, 3GPP_SBI_TARGET_ROOT, PATH, METHOD) \
-                  VALUES (NULL, "+HOST_VAL+", "+TGPP_TAR_VAL+", "+PATH_VAL+", "+METHOD_VAL+")"
+    sqlcmd= "INSERT INTO  "+DB_NAME+"."+TBL_NAME+" (FlowID, MSG_DIR, AUTHORITY, PATH, METHOD) \
+                  VALUES (NULL, '"+MSG_DIR_VAL+"', '"+AUTH_VAL+"', '"+PATH_VAL+"', '"+METHOD_VAL+"')"
     return sqlcmd
 
 
@@ -131,10 +131,10 @@ async def post_dd_data(item: DDItems):
         PASSWORD='root'
         MYSQLIP='172.17.0.1'
         MYSQLPORT='3306'
-        conn = mysqldb.conn_setup(USERNAME,PASSWORD,MYSQLIP,MYSQLPORT)
+        eng, conn = mysqldb.conn_setup(USERNAME,PASSWORD,MYSQLIP,MYSQLPORT)
         logging.info("CONNECTION ESTABLISHED")
         sql_create_table="CREATE TABLE IF NOT EXISTS test_tbl (\
-        FlowID int NOT NULL AUTO_INCREMENT, HOST varchar(255) NOT NULL, 3GPP_SBI_TARGET_ROOT varchar(255) NOT NULL,\
+        FlowID int NOT NULL AUTO_INCREMENT, MSG_DIR varchar(255) NOT NULL, AUTHORITY varchar(255) NOT NULL,\
         PATH varchar(255), METHOD varchar(255), PRIMARY KEY (FlowID));"
         rowid = mysqldb.sql_cmd(conn, sql_create_table)
         logging.info("TABLE EXECUTED")
@@ -142,6 +142,8 @@ async def post_dd_data(item: DDItems):
         lastrowid = mysqldb.sql_cmd(conn, sqlcmd)
         logging.info("SQLCMD EXECUTED")
         logging.info("LASTROWID: ", lastrowid)
+        conn.close()
+        eng.dispose()
         return JSONResponse(content=json_of_item, status_code=201)
         #return JSONResponse(content=item, status_code=201)
         #return JSONResponse(status_code=201)

@@ -8,7 +8,7 @@ def conn_setup(USERNAME,PASSWORD,MYSQLIP,MYSQLPORT):
     p = connection.execute(text('SHOW DATABASES'))
     available_tables = p.fetchall()
     print(available_tables)
-    return connection
+    return engine, connection
 
 def sql_cmd(connection, sqlcmd):
     q = connection.execute(text(sqlcmd))
