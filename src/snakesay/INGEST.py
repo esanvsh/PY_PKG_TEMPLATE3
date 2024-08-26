@@ -76,10 +76,10 @@ metadata = {
 def process_string(json_as_string): 
     logging.info(type(json_as_string))
     json_object = json.loads(json_as_string)
-    HOST_VAL=str(json_object["header-list"]["host"])
-    TGPP_TAR_VAL=str(json_object["header-list"]["3gpp-sbi-target-apiroot"])
-    PATH_VAL=str(json_object["header-list"][":path"])
-    METHOD_VAL=str(json_object["header-list"][":method"])
+    HOST_VAL=str(json_object["header-list"]["host"][0])
+    TGPP_TAR_VAL=str(json_object["header-list"]["3gpp-sbi-target-apiroot"][0])
+    PATH_VAL=str(json_object["header-list"][":path"][0])
+    METHOD_VAL=str(json_object["header-list"][":method"][0])
     DB_NAME='test'
     TBL_NAME='test_tbl'
     sqlcmd= "INSERT INTO  "+DB_NAME+"."+TBL_NAME+" (FlowID, HOST, 3GPP_SBI_TARGET_ROOT, PATH, METHOD) \
