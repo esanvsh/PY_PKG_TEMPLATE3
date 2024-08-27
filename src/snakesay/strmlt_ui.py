@@ -7,7 +7,7 @@ import requests
 import linecache
 import json
 
-#import plotly.express as px
+import plotly.express as px
 
 #################################
 # DEFINE ALL FUNCTIONS
@@ -138,15 +138,22 @@ if fetch or st.session_state.fetch_state:
    col1, col2 = st.columns((2))
    CATEGORY1='PATH_SHORT'
    CATEGORY2='AUTHORITY'
-   category_df = filter_df.groupby(by = ["Category"], as_index = False)[CATEGORY1].count()
-   st.dataframe(category_df)
-   # with col1:
-   #    st.subheader("PATH CATEGORY")
-   #    fig.px.bar(category_df, x = "Category", y = "PATH", text = ['${:,.2f}'.format(x) for x in category_df[CATEGORY1]],
-   #               template = "seaborn")
-   #    st.plotly_chart(fig,use_container_width=True, height = 200)
-   # with col2:
-   #    st.subheader("AUTHORITY CATEGORY")
-   #    fig.px.bar(category_df, x = "Category", y = "PATH", text = ['${:,.2f}'.format(x) for x in category_df[CATEGORY2]],
-   #               template = "seaborn")
-   #    st.plotly_chart(fig,use_container_width=True, height = 200)
+   CATEGORY11='PATH'
+   category_df1 = filter_df.groupby(by = [CATEGORY1], as_index = False)[CATEGORY11].count()
+   category_df2 = filter_df.groupby(by = [CATEGORY2], as_index = False)[CATEGORY11].count()
+   #st.dataframe(category_df)
+   with col1:
+      st.subheader("PATH count")
+      fig = px.bar(category_df2, x = CATEGORY1, y = "PATH", text = ['${:,.2f}'.format(x) for x in category_df1[CATEGORY11]],
+                 template = "seaborn")
+      st.plotly_chart(fig,use_container_width=True, height = 200)
+   with col2:
+      st.subheader("AUTHORITY CATEGORY")
+      fig.px.bar(category_df2, x = CATEGORY2, y = "PATH", text = ['${:,.2f}'.format(x) for x in category_df2[CATEGORY11]],
+                 template = "seaborn")
+      st.plotly_chart(fig,use_container_width=True, height = 200)
+  #  with col2:
+  #     st.subheader("AUTHORITY wise CATEGORY")
+  #     fig = px.pie(filter_df, values = CATEGORY11, names = CATEGORY2, hole = 0.5)
+  #     fig.update_traces(text = filter_df[CATEGORY2], textposition = "outside")
+  #     st.plotly_chart(fig,use_container_width=True, height = 200)
