@@ -169,7 +169,12 @@ async def get_fetch_data():
         conn.close()
         eng.dispose()
         # result to dict
-        r1_dict = r1.mappings().all()
+        r1_data = r1.mappings().all()
+        r1_dict={}
+        for i in range(len(r1_data)):
+            r1_dict_child = dict(r1_data[i])
+            r1_dict[i] = r1_dict_child
+
         logging.info(r1_dict)
         r1_json=json.dumps(r1_dict)
         return JSONResponse(content=r1_json, status_code=201)
