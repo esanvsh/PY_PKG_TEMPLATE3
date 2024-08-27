@@ -37,6 +37,15 @@ def Process_File(start_num, end_num) -> pd.DataFrame:
   #print(df)
   return df
 
+def fetch_data() -> pd.DataFrame:
+  df = pd.DataFrame()
+  response = requests.post('http://localhost:8002/get_fetch_data')
+  print("GET FETCH DATA Response Code")
+  print(response.status_code)
+  data_str = response.json()
+  data_dict = json.loads(data_str)
+  df = pd.DataFrame([data_dict])
+  return df
 
 #################################
 # STREAMLIT DEFINITIONS
@@ -82,7 +91,7 @@ if "fetch_state" not in st.session_state:
 if fetch or st.session_state.fetch_state:
    st.session_state.fetch_state = True
    st.markdown('## FETCH FROM DB')
-   dfdf2 = Process_File(start_num, end_num)
+   dfdf2 = fetch_data()
    dfdf2['PATH_SHORT'] = dfdf2['PATH'].str[:8]
    dfdf5 = dfdf2.head(5)
    st.dataframe(dfdf5)
