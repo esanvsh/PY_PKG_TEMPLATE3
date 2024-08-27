@@ -76,7 +76,7 @@ metadata = {
 def process_string(json_as_string): 
     logging.info(type(json_as_string))
     json_object = json.loads(json_as_string)
-    MSG_DIR_VAL=str(json_object["metadata-list"]["message-direction"][0])
+    MSG_DIR_VAL=str(json_object["metadata-list"]["message-direction"])
     AUTH_VAL=str(json_object["header-list"][":authority"][0])
     PATH_VAL=str(json_object["header-list"][":path"][0])
     METHOD_VAL=str(json_object["header-list"][":method"][0])
@@ -156,7 +156,7 @@ async def get_fetch_data():
     logging.info('MESSAGE RECEIVED get_fetch_data')
     #return {"status":"success"}
     try:
-        selectsqlcmd="select * from test.test_tbl"
+        selectsqlcmd="select * from test.test_tbl;"
         USERNAME='root'
         PASSWORD='root'
         MYSQLIP='172.17.0.1'
