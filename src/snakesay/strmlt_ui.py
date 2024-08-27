@@ -13,7 +13,7 @@ import plotly.express as px
 # DEFINE ALL FUNCTIONS
 #################################
 
-def Process_File(start_num, end_num) -> pd.DataFrame:
+def Process_File(start_num, end_num, fapi_server) -> pd.DataFrame:
   start = int(start_num)
   end = int(end_num)
   # Loop over the JSON file
@@ -25,7 +25,7 @@ def Process_File(start_num, end_num) -> pd.DataFrame:
       #print(line)
       # write the line to the API
       myjson = json.loads(line)
-      response = requests.post('http://localhost:8002/callproducer', json=myjson)
+      response = requests.post('http://'+fapi_server+':8002/callproducer', json=myjson)
       # Use this for dedbugging
       #print("Status code: ", response.status_code)
       #print("Printing Entire Post Request")
@@ -39,9 +39,9 @@ def Process_File(start_num, end_num) -> pd.DataFrame:
   #print(df)
   return df
 
-def fetch_data() -> pd.DataFrame:
+def fetch_data(fapi_server) -> pd.DataFrame:
   df = pd.DataFrame()
-  response = requests.post('http://localhost:8002/get_fetch_data')
+  response = requests.post('http://'+fapi_server+':8002/get_fetch_data')
   print("GET FETCH DATA Response Code")
   print(response.status_code)
   data_str = response.json()
@@ -69,6 +69,11 @@ else:
    st.write("USING DEFAULT FILE")
 
 #++++++++++++++++++++++++++++++++
+# VARIABLES
+#++++++++++++++++++++++++++++++++
+fapi_server='172.17.0.1'
+
+#++++++++++++++++++++++++++++++++
 # LOAD DATA
 #++++++++++++++++++++++++++++++++
 load = st.button ('LOAD DATA in DB')
@@ -82,7 +87,7 @@ if load or st.session_state.load_state:
    st.markdown('## NUMBER OF LINE TO READ')
    start_num = st.number_input('start_line',min_value=1, max_value=10)
    end_num = st.number_input('end_line',min_value=1, max_value=10)
-   dfdf1 = Process_File(start_num, end_num)
+   dfdf1 = Process_File(start_num, end_num, fapi_server)
    st.dataframe(dfdf1)
 
 #++++++++++++++++++++++++++++++++
@@ -95,7 +100,7 @@ if "fetch_state" not in st.session_state:
 if fetch or st.session_state.fetch_state:
    st.session_state.fetch_state = True
    st.markdown('## FETCH FROM DB')
-   dfdf2 = fetch_data()
+   dfdf2 = fetch_data(fapi_server)
    dfdf2['PATH_SHORT'] = dfdf2['PATH'].str[:8]
    dfdf5 = dfdf2.head(5)
    st.dataframe(dfdf5)
@@ -144,12 +149,12 @@ if fetch or st.session_state.fetch_state:
    #st.dataframe(category_df)
    with col1:
       st.subheader("PATH count")
-      fig = px.bar(category_df2, x = CATEGORY1, y = "PATH", text = ['{:,.2f}'.format(x) for x in category_df1[CATEGORY11]],
+      fig = px.bar(category_df1, x = CATEGORY1, y = "PATH", text = ['{:,.2f}'.format(x) for x in category_df1[CATEGORY11]],
                  template = "seaborn")
       st.plotly_chart(fig,use_container_width=True, height = 200)
    with col2:
       st.subheader("AUTHORITY CATEGORY")
-      fig.px.bar(category_df2, x = CATEGORY2, y = "PATH", text = ['{:,.2f}'.format(x) for x in category_df2[CATEGORY11]],
+      fig = px.bar(category_df2, x = CATEGORY2, y = "PATH", text = ['{:,.2f}'.format(x) for x in category_df2[CATEGORY11]],
                  template = "seaborn")
       st.plotly_chart(fig,use_container_width=True, height = 200)
   #  with col2:
