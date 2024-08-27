@@ -84,7 +84,7 @@ def process_string(json_as_string):
     TBL_NAME='test_tbl'
     sqlcmd="INSERT INTO  "+DB_NAME+"."+TBL_NAME+" (FlowID, MSG_DIR, AUTHORITY, PATH, METHOD) \
                   VALUES (NULL, '"+MSG_DIR_VAL+"', '"+AUTH_VAL+"', '"+PATH_VAL+"', '"+METHOD_VAL+"')"
-    sqldict={'MSG_DIRECTION': MSG_DIR_VAL, 'AUTHORITY': AUTH_VAL, 'PATH': PATH_VAL, 'METHOD': METHOD_VAL}
+    sqldict={'MSG_DIR': MSG_DIR_VAL, 'AUTHORITY': AUTH_VAL, 'PATH': PATH_VAL, 'METHOD': METHOD_VAL}
     return sqlcmd, sqldict
 
 
@@ -163,7 +163,7 @@ async def get_fetch_data():
         MYSQLPORT='3306'
         eng, conn = mysqldb.conn_setup(USERNAME,PASSWORD,MYSQLIP,MYSQLPORT)
         logging.info("CONNECTION ESTABLISHED")
-        r1, rid1 = mysqldb.select_sql_cmd(conn, selectsqlcmd)
+        r1, rid1 = mysqldb.sql_cmd(conn, selectsqlcmd)
         logging.info("SELECTSQLCMD EXECUTED")
         logging.info(r1)
         conn.close()
@@ -172,9 +172,9 @@ async def get_fetch_data():
         r1_dict = r1.mappings().all()
         logging.info(r1_dict)
         r1_json=json.dumps(r1_dict)
-        #return JSONResponse(content=json_of_item, status_code=201)
+        return JSONResponse(content=r1_json, status_code=201)
         #return JSONResponse(content=item, status_code=201)
-        return JSONResponse(status_code=201)
+        #return JSONResponse(status_code=201)
     except ValueError:
         #return JSONResponse(content=jsonable_encoder(item), status_code=400)
         return JSONResponse(status_code=400)
