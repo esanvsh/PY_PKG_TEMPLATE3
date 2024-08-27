@@ -20,6 +20,6 @@ RUN ./init_setup.sh
 #RUN /bin/bash -c "source ./venv/bin/activate"
 #RUN /bin/bash -c "python3.11 -m pip install -e ."
 EXPOSE 8002
-EXPOSE 8501
+#EXPOSE 8501
 # Run CMD
 CMD ["uvicorn", "src.snakesay.INGEST:app", "--reload", "--port", "8002", "--host", "0.0.0.0"]
