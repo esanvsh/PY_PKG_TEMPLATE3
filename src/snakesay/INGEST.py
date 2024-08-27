@@ -134,6 +134,7 @@ async def post_dd_data(item: DDItems):
         MYSQLIP='172.17.0.1'
         MYSQLPORT='3306'
         eng, conn = mysqldb.conn_setup(USERNAME,PASSWORD,MYSQLIP,MYSQLPORT)
+        #eng, conn = mysqldb.conn_setup('root','root','172.17.0.1','3306')
         logging.info("CONNECTION ESTABLISHED")
         sql_create_table="CREATE TABLE IF NOT EXISTS test_tbl (\
         FlowID int NOT NULL AUTO_INCREMENT, MSG_DIR varchar(255) NOT NULL, AUTHORITY varchar(255) NOT NULL,\

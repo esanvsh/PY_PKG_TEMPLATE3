@@ -46,7 +46,9 @@ def fetch_data() -> pd.DataFrame:
   print(response.status_code)
   data_str = response.json()
   data_dict = json.loads(data_str)
-  df = pd.DataFrame([data_dict])
+  df = pd.DataFrame()
+  for k1, v1 in data_dict.items():
+     df = pd.concat([df, pd.DataFrame([v1])], ignore_index=True)
   return df
 
 #################################
