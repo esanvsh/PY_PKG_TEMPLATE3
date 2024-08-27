@@ -22,5 +22,5 @@ RUN ./init_setup_ui.sh
 #EXPOSE 8002
 EXPOSE 8501
 # Run CMD
-#CMD ["streamlit", "run", "./src/snakesay/strmlt_ui.py", "--server.port=8501", "--server.serverAddress='0.0.0.0'"]
-CMD ["streamlit", "run", "./src/snakesay/strmlt_ui.py"]
+CMD ["streamlit", "run", "./src/snakesay/strmlt_ui.py", "--server.port=8501", "--server.address='0.0.0.0'"]
+#CMD ["streamlit", "run", "./src/snakesay/strmlt_ui.py"]
