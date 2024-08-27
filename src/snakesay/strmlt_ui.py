@@ -144,12 +144,12 @@ if fetch or st.session_state.fetch_state:
    #st.dataframe(category_df)
    with col1:
       st.subheader("PATH count")
-      fig = px.bar(category_df2, x = CATEGORY1, y = "PATH", text = ['${:,.2f}'.format(x) for x in category_df1[CATEGORY11]],
+      fig = px.bar(category_df2, x = CATEGORY1, y = "PATH", text = ['{:,.2f}'.format(x) for x in category_df1[CATEGORY11]],
                  template = "seaborn")
       st.plotly_chart(fig,use_container_width=True, height = 200)
    with col2:
       st.subheader("AUTHORITY CATEGORY")
-      fig.px.bar(category_df2, x = CATEGORY2, y = "PATH", text = ['${:,.2f}'.format(x) for x in category_df2[CATEGORY11]],
+      fig.px.bar(category_df2, x = CATEGORY2, y = "PATH", text = ['{:,.2f}'.format(x) for x in category_df2[CATEGORY11]],
                  template = "seaborn")
       st.plotly_chart(fig,use_container_width=True, height = 200)
   #  with col2:
