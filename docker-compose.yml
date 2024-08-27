@@ -37,17 +37,17 @@ services:
       - "8002:8002"
     # command:
     #   tail -f /dev/null
-  # streamlit_ui:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile_ui
-  #   depends_on:
-  #     - python_app
-  #   network_mode: bridge
-  #   # networks:
-  #   #   - app-tier
-  #   ports:
-  #     - "8501:8501"
+  streamlit_ui:
+    build:
+      context: .
+      dockerfile: Dockerfile_ui
+    depends_on:
+      - mysql_db
+    network_mode: bridge
+    # networks:
+    #   - app-tier
+    ports:
+      - "8501:8501"
     # command:
     #   tail -f /dev/null
 
