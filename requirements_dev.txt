@@ -13,6 +13,8 @@ pymysql
 # For mysqlclient we need to downgrade our python version from 3.11
 #mysqlclient
 mysql-connector-python
+## VISUALIZE
+plotly.express
 #####################################
 # ENV, PACKAGE, DOCS realted Library
 #####################################
