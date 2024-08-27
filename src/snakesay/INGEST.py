@@ -82,9 +82,10 @@ def process_string(json_as_string):
     METHOD_VAL=str(json_object["header-list"][":method"][0])
     DB_NAME='test'
     TBL_NAME='test_tbl'
-    sqlcmd= "INSERT INTO  "+DB_NAME+"."+TBL_NAME+" (FlowID, MSG_DIR, AUTHORITY, PATH, METHOD) \
+    sqlcmd="INSERT INTO  "+DB_NAME+"."+TBL_NAME+" (FlowID, MSG_DIR, AUTHORITY, PATH, METHOD) \
                   VALUES (NULL, '"+MSG_DIR_VAL+"', '"+AUTH_VAL+"', '"+PATH_VAL+"', '"+METHOD_VAL+"')"
-    return sqlcmd
+    sqldict={'MSG_DIRECTION': MSG_DIR_VAL, 'AUTHORITY': AUTH_VAL, 'PATH': PATH_VAL, 'METHOD': METHOD_VAL}
+    return sqlcmd, sqldict
 
 
 @app.get("/")
@@ -126,7 +127,8 @@ async def post_dd_data(item: DDItems):
         json_as_string = json.dumps(json_of_item)
         #print(json_as_string)
         # CALL PRODUCER KAFKA FUNCTION
-        sqlcmd=process_string(json_as_string)
+        sqlcmd, rr1_dict=process_string(json_as_string)
+        rr1_json=json.dumps(rr1_dict)
         USERNAME='root'
         PASSWORD='root'
         MYSQLIP='172.17.0.1'
@@ -136,19 +138,46 @@ async def post_dd_data(item: DDItems):
         sql_create_table="CREATE TABLE IF NOT EXISTS test_tbl (\
         FlowID int NOT NULL AUTO_INCREMENT, MSG_DIR varchar(255) NOT NULL, AUTHORITY varchar(255) NOT NULL,\
         PATH varchar(255), METHOD varchar(255), PRIMARY KEY (FlowID));"
-        rowid = mysqldb.sql_cmd(conn, sql_create_table)
+        p1, rowid = mysqldb.sql_cmd(conn, sql_create_table)
         logging.info("TABLE EXECUTED")
         logging.info("ROWID: ", rowid)
-        lastrowid = mysqldb.sql_cmd(conn, sqlcmd)
+        p2, lastrowid = mysqldb.sql_cmd(conn, sqlcmd)
         logging.info("SQLCMD EXECUTED")
         logging.info("LASTROWID: ", lastrowid)
         conn.close()
         eng.dispose()
-        return JSONResponse(content=json_of_item, status_code=201)
-        #return JSONResponse(content=item, status_code=201)
+        #return JSONResponse(content=json_of_item, status_code=201)
+        return JSONResponse(content=rr1_json, status_code=201)
         #return JSONResponse(status_code=201)
     except ValueError:
         return JSONResponse(content=jsonable_encoder(item), status_code=400)
+@app.post("/get_fetch_data")
+async def get_fetch_data():
+    logging.info('MESSAGE RECEIVED get_fetch_data')
+    #return {"status":"success"}
+    try:
+        selectsqlcmd="select * from test.test_tbl"
+        USERNAME='root'
+        PASSWORD='root'
+        MYSQLIP='172.17.0.1'
+        MYSQLPORT='3306'
+        eng, conn = mysqldb.conn_setup(USERNAME,PASSWORD,MYSQLIP,MYSQLPORT)
+        logging.info("CONNECTION ESTABLISHED")
+        r1, rid1 = mysqldb.select_sql_cmd(conn, selectsqlcmd)
+        logging.info("SELECTSQLCMD EXECUTED")
+        logging.info(r1)
+        conn.close()
+        eng.dispose()
+        # result to dict
+        r1_dict = r1.mappings().all()
+        logging.info(r1_dict)
+        r1_json=json.dumps(r1_dict)
+        #return JSONResponse(content=json_of_item, status_code=201)
+        #return JSONResponse(content=item, status_code=201)
+        return JSONResponse(status_code=201)
+    except ValueError:
+        #return JSONResponse(content=jsonable_encoder(item), status_code=400)
+        return JSONResponse(status_code=400)
 
 
 

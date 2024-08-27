@@ -14,5 +14,5 @@ def sql_cmd(connection, sqlcmd):
     q = connection.execute(text(sqlcmd))
     connection.commit()
     print("ID of Row Added  = ",q.lastrowid)
-    return q.lastrowid
+    return q, q.lastrowid
 
