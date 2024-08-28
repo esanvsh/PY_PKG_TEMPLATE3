@@ -13,6 +13,6 @@ echo [$(date)]: "INSTALLING DEV requirements"
 # WITHOUT CONDA
 #python3.11 -m pip install -e .
 # WITH CONDA
-pip install -r requirements_ui_dev.txt
+pip install -r requirements_ui_dev.txt --default-timeout=100
 #pip install -r requirements.txt
 echo [$(date)]: "END"
