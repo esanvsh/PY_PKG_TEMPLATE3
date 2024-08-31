@@ -74,7 +74,7 @@ else:
 fapi_server='172.17.0.1'
 
 #++++++++++++++++++++++++++++++++
-# LOAD DATA
+# LOAD DATA to DB
 #++++++++++++++++++++++++++++++++
 load = st.button ('LOAD DATA in DB')
 fetch = st.button ('FETCH DATA from DB')
